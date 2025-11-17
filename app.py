@@ -23,7 +23,12 @@ df_acciones_ret = close_acc.pct_change().dropna().reset_index()
 
 #3. CARGA DE DATASET CSV DE CRIPTOMONEDAS
 
-df_crypto = pd.read_csv("Crypto_historical_data.csv")
+#Cargar partes divididas del archivo
+df_crypto_1 = pd.read_csv("Crypto_historical_data_part1.csv")
+df_crypto_2 = pd.read_csv("Crypto_historical_data_part2.csv")
+
+#Unir los datasets
+df_crypto = pd.concat([df_crypto_1, df_crypto_2], ignore_index=True)
 
 df_crypto["Date"] = pd.to_datetime(df_crypto["Date"])
 df_crypto["Return"] = df_crypto.groupby("ticker")["Close"].pct_change()
